@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Models\Category;
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +12,7 @@ use App\Models\User;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
-
-Route::get('authors/{author:username}', function(User $author) {
-    return view('posts', [
-        'posts' => $author->posts,
-        'categories' => Category::all()
-    ]);
-});
