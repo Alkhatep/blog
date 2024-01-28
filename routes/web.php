@@ -6,16 +6,20 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
- */
+Route::get('ping', function () {
+	$mailchimp = new \MailchimpMarketing\ApiClient();
+
+	$mailchimp->setConfig([
+		'apiKey' => config('services.mailchimp.key'),
+		'server' => 'us17',
+	]);
+
+	$response = $mailchimp->lists->addListMember('65cb51d4de', [
+		'email_address' => '3bdulladulla@gmail.com',
+		'status' => 'subscribed',
+	]);
+	ddd($response);
+});
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
